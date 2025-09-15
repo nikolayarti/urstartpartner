@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrStart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-img {
+    width: 40px; /* Фиксированная ширина */
+    height: 40px; /* Фиксированная высота */
+    object-fit: contain; /* Важно: сохраняет пропорции */
+    margin-right: 12px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* Плавающая шапка */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 15px 25px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 90%;
+            max-width: 1200px;
+            transition: all 0.3s ease;
+        }
+
+        .header__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Логотип */
+        .logo {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-left: 10px;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Навигация */
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav__link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav__link:hover {
+            color: #667eea;
+            cursor: pointer;
+        }
+
+        .nav__link::after {
+            cursor: default;
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav__link:hover::after {
+            width: 100%;
+        }
+
+        /* Бургер-меню */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .burger-menu span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Thumbnail баннер */
+        .thumbnail-banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+                        url('assets/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .thumbnail-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .thumbnail-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .thumbnail-text {
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .thumbnail-btn {
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 35px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .thumbnail-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Три белых блока */
+        .white-blocks {
+            padding: 80px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .white-block {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            min-width: 300px;
+            max-width: 350px;
+            transition: transform 0.3s ease;
+        }
+
+        .white-block:hover {
+            transform: translateY(-10px);
+        }
+
+        .white-block h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .white-block p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        /* Форма заявки */
+        .application {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .application-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .application h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .application p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5eb;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            color: white;
+            padding: 16px 45px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Футер */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #667eea;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 968px) {
+            .header {
+                width: 95%;
+                padding: 12px 20px;
+            }
+            
+            .nav {
+                gap: 20px;
+            }
+            
+            .thumbnail-title {
+                font-size: 2.8em;
+            }
+            
+            .thumbnail-text {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                margin-top: 10px;
+            }
+            
+            .nav.active {
+                display: flex;
+            }
+            
+            .burger-menu {
+                display: flex;
+            }
+            
+            .thumbnail-title {
+                font-size: 2.2em;
+            }
+            
+            .thumbnail-text {
+                font-size: 1.1em;
+            }
+            
+            .thumbnail-btn {
+                padding: 15px 40px;
+                font-size: 1.1em;
+            }
+            
+            .white-blocks {
+                gap: 40px;
+                padding: 60px 20px;
+            }
+            
+            .white-block {
+                padding: 40px;
+                min-width: 250px;
+            }
+            
+            .application-container {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            .header {
+                padding: 10px 15px;
+                border-radius: 20px;
+                top: 15px;
+            }
+            
+            .thumbnail-title {
+                font-size: 1.8em;
+            }
+            
+            .thumbnail-text {
+                font-size: 1em;
+            }
+            
+            .thumbnail-btn {
+                padding: 12px 35px;
+                font-size: 1em;
+            }
+            
+            .white-blocks {
+                gap: 30px;
+                padding: 40px 15px;
+            }
+            
+            .white-block {
+                padding: 30px;
+                min-width: 100%;
+            }
+            
+            .white-block h3 {
+                font-size: 1.5em;
+            }
+            
+            .application {
+                padding: 40px 15px;
+            }
+            
+            .application-container {
+                padding: 25px 20px;
+            }
+            
+            .application h2 {
+                font-size: 2em;
+            }
+        }
+
+        /* Утилиты */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .about {
+            padding: 100px 20px;
+            background: white;
+        }
+        
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-content h2 {
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .about-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8efff 100%);
+            border-radius: 15px;
+            border: 1px solid #e3e8ff;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1em;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .about-image {
+            position: relative;
+        }
+        
+        .about-img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .experience-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 50%;
+            text-align: center;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .years {
+            font-size: 2em;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .years-text {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+
+        .about-btn {
+            background: linear-gradient(135deg, #66baea 0%, #4b6ea2 100%);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            margin-top: 20px;
+        }
+        
+        .about-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Адаптивность для раздела "О компании" */
+        @media (max-width: 968px) {
+            .about-container {
+                gap: 40px;
+            }
+            
+            .about-content h2 {
+                font-size: 2.3em;
+            }
+            
+            .stat-number {
+                font-size: 2em;
+            }
+            
+            .experience-badge {
+                width: 100px;
+                height: 100px;
+                right: -10px;
+            }
+            
+            .years {
+                font-size: 1.7em;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about {
+                padding: 80px 20px;
+            }
+            
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+            
+            .about-content h2 {
+                font-size: 2.1em;
+            }
+            
+            .about-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .stat-item {
+                padding: 20px;
+            }
+            
+            .experience-badge {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin: 30px auto;
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .about {
+                padding: 60px 15px;
+            }
+            
+            .about-content h2 {
+                font-size: 1.8em;
+            }
+            
+            .about-text {
+                font-size: 1em;
+            }
+            
+            .about-stats {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .stat-item {
+                padding: 15px;
+            }
+            
+            .stat-number {
+                font-size: 1.8em;
+            }
+            
+            .experience-badge {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .years {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<script>
+    // Динамическое вычисление высоты шапки
+    function updateBannerPadding() {
+        const header = document.querySelector('.header');
+        const banner = document.querySelector('.thumbnail-banner');
+        
+        if (header && banner) {
+            const headerHeight = header.offsetHeight;
+            const headerTop = parseInt(getComputedStyle(header).top);
+            const totalHeight = headerHeight + headerTop + 20; // +20px для дополнительного пространства
+            
+            banner.style.paddingTop = totalHeight + 'px';
+        }
+    }
+
+    // Вызываем при загрузке и изменении размера
+    window.addEventListener('load', updateBannerPadding);
+    window.addEventListener('resize', updateBannerPadding);
+    
+    // Также обновляем после анимации шапки при скролле
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(updateBannerPadding, 100);
+    });
+</script>
+<body>
+    <header class="header">
+        <div class="header__inner">
+<a href="#" class="logo">
+    <img src="assets/logo.png" class="logo-img">
+    <h1>Партнер.Старт</h1>
+</a>
+            
+            <nav class="nav">
+                <p class="nav__link" onclick="scrollToTop()">Главная</p>
+                <p class="nav__link" onclick="scrollToApplication('application')">Списание долгов</p>
+                <p class="nav__link" onclick="scrollToApplication('about')">О нас</p>
+                <a href="https://urstart.ru/otzyvy-i-blagodarnosti" class="nav__link">Отзывы</a>
+            </nav>
+            
+            <button class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="thumbnail-banner">
+            <div class="thumbnail-content">
+                <h2 class="thumbnail-title">Юридическое списание долгов с гарантией результата</h2>
+                <p class="thumbnail-text">Законное и полное освобождение от долговых обязательств. Вернём вам финансовую стабильность и спокойный сон.</p>
+                <button class="thumbnail-btn" onclick="scrollToApplication('application')">Оставить заявку</button>
+            </div>
+        </section>
+
+        <div class="white-blocks">
+            <div class="white-block">
+                <h3>🌐 Работаем по всей России</h3>
+                <p>Дистанционное сопровождение из любого города.</p>
+            </div>
+            
+            <div class="white-block">
+                <h3>💪 Гарантия списания</h3>
+                <p> Немедленно прекращаем любое давление на вас после начала работы.</p>
+            </div>
+            
+            <div class="white-block">
+                <h3>🔑 Под ключ</h3>
+                <p> Полное сопровождение: от консультации до получения судебного решения.</p>
+            </div>
+        </div>
+
+        <section class="application" id="application">
+            <div class="application-container">
+                <h2>Оставьте заявку</h2>
+                <p>Заполните форму ниже, и наш специалист свяжется с вами в ближайшее время</p>
+                
+                <div class="alert alert-success" id="success-message">
+                    Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.
+                </div>
+                
+                <div class="alert alert-error" id="error-message">
+                    Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.
+                </div>
+                
+                <form id="application-form">
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Введите ваш email (Не обязательно)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="Введите ваш телефон">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" name="message" placeholder="Расскажите о вашей проблеме или задайте вопрос(Не обязательно)"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Отправить заявку</button>
+                </form>
+            </div>
+        </section>
+        <section class="thumbnail-banner" class="about-banner">
+            <div class="thumbnail-content">
+                <h2 class="thumbnail-title">О компании «Старт» </h2>
+                <p class="thumbnail-text">Узнайте больше о нашей миссии, ценностях и команде профессионалов</p>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="about-container">
+                <div class="about-content">
+                    <h2>Мы создаем будущее вместе с вами</h2>
+                    <p class="about-text">
+                        «Старт» — это команда профессиональных юристов и финансовых управляющих, которая специализируется на помощи гражданам, попавшим в долговую яму. 
+                    </p>
+                    <p class="about-text">
+   Наша миссия — дать людям второй финансовый шанс. Мы не верим в то, что однажды совершённая ошибка должна определять всю дальнейшую жизнь. Мы видим свою работу не просто как оказание юридических услуг, а как возможность кардинально улучшить качество жизни наших клиентов.
+                    </p>
+                    <button class="about-btn">Связаться с нами</button>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">999+</div>
+                            <div class="stat-label">Довольных клиентов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12+</div>
+                            <div class="stat-label">Лет опыта</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Успешных дел</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Контроль</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Наша команда" class="about-img">
+                    <div class="experience-badge">
+                        <div class="years">12+</div>
+                        <div class="years-text">лет опыта</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>О нас</h3>
+                <p>Мы несём финансовую ответственность перед клиентами.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-map-marker-alt"></i> ул. Бауманская, д. 32, стр. 2, 4 этаж, офис 10 , Москва</p>
+                <p><i class="fas fa-phone"></i> +7 (993) 334-75-48</p>
+                <p><i class="fas fa-envelope"></i> info@urstart.ru</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Социальные сети</h3>
+                <p>Подпишитесь на нас в соцсетях</p>
+                <div class="social-icons">
+                    <a href="https://vk.com/urstart"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="https://www.youtube.com/@urstart/shorts"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 ООО «Старт». Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwXTfyqA5B2DZkupbgLRbb1mD3klr7M-Wl-nOZJeqsGzjqTITNB5KyT20YlpKBB5sY/exec";
+        document.querySelector('.burger-menu').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.nav').classList.toggle('active');
+        });
+
+        function scrollToApplication(elementId) {
+            document.getElementById(elementId).scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        document.getElementById('application-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            setTimeout(function() {
+                if (Math.random() > 0.1) {
+                    successMessage.style.display = 'block';
+                    document.getElementById('application-form').reset();
+                    addDataToSheet();
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+            }, 1000);
+        });
+
+        
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+        document.getElementById('application-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+        
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+        
+        // Собираем данные формы
+        const formData = new FormData(this);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email') || 'Не указан',
+            phone: formData.get('phone'),
+            message: formData.get('message') || 'Не указано'
+        };
+
+        // Отправляем данные в Google Apps Script
+        fetch(`${SCRIPT_URL}`, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            successMessage.style.display = 'block';
+            document.getElementById('application-form').reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            errorMessage.style.display = 'block';
+        });
+    });
+
+    </script>
+</body>
+</html>
